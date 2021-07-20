@@ -17,4 +17,4 @@ With it, you can do and view notes from both user and admin side. Also, the admi
 
 # About database
 ER Diagramm
-![](/sqlCode.png)
+![](./sqlCode.png)
