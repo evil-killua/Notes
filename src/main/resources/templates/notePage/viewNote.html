@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>view note</title>
+</head>
+<body>
+
+<table border="1">
+    <tr>
+        <th>id</th>
+        <th>noteName</th>
+        <th>noteText</th>
+        <th>LastChange</th>
+
+    </tr>
+
+        <td th:text="${note.getId()}"></td>
+        <td th:text="${note.getNoteName()}"></td>
+        <td th:text="${note.getNoteText()}"></td>
+        <td th:text="${note.getLastChange()}"></td>
+
+</table>
+<a class="btn" th:href="@{/note}">back</a>
+
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>note page</title>
+</head>
+<body>
+
+<table border="1">
+    <tr>
+        <th><a th:href="@{/allNotes}">id</a></th>
+        <th><a th:href="@{/allNotes/name}">noteName</a></th>
+        <th><a th:href="@{/allNotes/date}">date of last change</a></th>
+        <th>viewText</th>
+        <th>update</th>
+        <th>delete</th>
+    </tr>
+
+    <tr th:each="note : ${notes}">
+        <td th:text="${note.getId()}"></td>
+        <td th:text="${note.getNoteName()}"></td>
+        <td th:text="${note.getLastChange()}"></td>
+        <td><a th:href="@{/note/{id}(id=${note.getId()})}">view note text</a></td>
+        <td><a th:href="@{/editNoteText/{id}(id=${note.getId()})}">update note text</a></td>
+        <td><a th:href="@{/deleteNote/{id}(id=${note.getId()})}">delete note</a></td>
+
+    </tr>
+</table>
+
+
+<form th:object="${role}">
+    <div th:if="${role=='ROLE_ADMIN'}">
+        <a th:href="@{/admin}">back</a>
+    </div>
+
+    <div th:unless="${role=='ROLE_ADMIN'}">
+        <a th:href="@{/user}">back</a>
+    </div>
+
+</form>
+
+</body>
+</html>

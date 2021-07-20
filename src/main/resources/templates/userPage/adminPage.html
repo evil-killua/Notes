@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:utext="${title}"></title>
+</head>
+<body>
+<!-- Include _menu.html -->
+<th:block th:include="/_menu"></th:block>
+
+<h2>Admin Page</h2>
+<h3>Welcome :
+    <span th:utext="${userInfo}"></span>
+</h3>
+<b>This is protected page!</b>
+
+<br/><br/>
+
+
+<div th:if="${userInfo != null}" th:utext="${userInfo}"></div>
+<!--<div th:if="${userInfo instanceof == 'java.lang.String'}" th:utext="${userInfo}"></div>-->
+<div th:unless="${users instanceof T(java.lang.String)}" th:utext="${users}"></div>
+
+
+<table border="1">
+    <tr>
+        <th>id</th>
+        <th>name</th>
+        <th>enable</th>
+        <th>update</th>
+        <th>delete</th>
+    </tr>
+
+    <tr th:each="user : ${users}">
+        <td th:text="${user.getId()}"></td>
+        <td th:text="${user.getUserName()}"></td>
+        <td th:text="${user.getEnable()}"></td>
+        <td><a th:href="@{/edit/{id}(id=${user.getId()})}">update</a></td>
+        <td><a th:href="@{/delete/{id}(id=${user.getId()})}">delete</a></td>
+
+    </tr>
+</table>
+<a th:href="@{/addNewNote}">new note</a>
+<a th:href="@{/note}">list user note</a>
+<a th:href="@{/allNotes}">all note</a>
+
+
+
+
+
+
+</body>
+
+</html>

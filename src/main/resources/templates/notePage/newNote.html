@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>new note</title>
+</head>
+<body>
+
+<h2>new note</h2>
+
+<form action="#" th:action="@{/newNote}" th:object="${noteForm}" method="post">
+
+    <h2 th:if="${error != null}" th:utext="${error}" style="color: red;"></h2>
+
+    <table>
+        <tbody>
+        <tr>
+            <td>note name</td>
+            <td>
+                <textarea class="input-field" maxlength="36" type="text" id="noteName" name="noteName" placeholder="noteName" th:wrap="soft"></textarea>
+
+            </td>
+        </tr>
+
+        <tr>
+            <td>note text</td>
+            <td>
+                <textarea class="input-field" maxlength="200" type="text" id="noteText" name="noteText" placeholder="noteText" th:wrap="soft"></textarea>
+
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <input type="submit" value="create new note">
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+</form>
+
+
+</body>
+</html>

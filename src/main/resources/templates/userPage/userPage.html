@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>user page</title>
+</head>
+<body>
+
+<th:block th:include="/_menu"></th:block>
+
+<h2>user Page</h2>
+<h3>Welcome :
+    <span th:utext="${userInfo}"></span>
+</h3>
+<b>This is protected page!</b>
+
+<br/><br/>
+
+<a th:href="@{/addNewNote}">new note</a>
+<a th:href="@{/note}">list note</a>
+
+</body>
+</html>

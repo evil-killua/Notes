@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>update note</title>
+</head>
+<body>
+
+<form action="#" th:action="@{/updateNoteText/{id}(id=${note.id})}" th:object="${note}" method="post">
+
+    <h2 th:if="${error != null}" th:utext="${error}" style="color: red;"></h2>
+    <table>
+        <tbody>
+        <tr>
+            <td>note text:</td>
+            <td>
+                <textarea maxlength="200" type="text" th:field="*{noteText}" id="noteText" placeholder="noteText" th:wrap="soft"></textarea>
+
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <input type="submit" value="Update note">
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+</form>
+
+</body>
+</html>
