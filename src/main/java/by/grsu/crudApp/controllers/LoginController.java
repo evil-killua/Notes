@@ -22,7 +22,7 @@ public class LoginController {
     @GetMapping
     public String getSignUpPage() {
 
-        return "signUp";
+        return "userPage/signUp";
     }
 
     @PostMapping("/signUp")
@@ -34,7 +34,7 @@ public class LoginController {
             return "redirect:/login";
         } catch (Exception e) {
             model.addAttribute("error", "There is an account with this username:");
-            return "signUp";
+            return "userPage/signUp";
         }
     }
 
@@ -49,7 +49,7 @@ public class LoginController {
 
         model.addAttribute("title", "Logout");
         logger.info("successful logout");
-        return "logoutSuccessfulPage";
+        return "userPage/logoutSuccessfulPage";
     }
 
 }

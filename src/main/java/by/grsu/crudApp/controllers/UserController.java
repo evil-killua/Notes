@@ -43,7 +43,7 @@ public class UserController {
         model.addAttribute("title", "Welcome");
         model.addAttribute("message", "This is welcome page!");
         logger.info("This is welcome page");
-        return "welcomePage";
+        return "userPage/welcomePage";
     }
 
     @GetMapping("/delete/{id}")
@@ -59,6 +59,7 @@ public class UserController {
 
         usersRepository.delete(user.getId());
         logger.info("delete user");
+
         return "redirect:/admin";
     }
 
@@ -66,7 +67,7 @@ public class UserController {
     public String showUpdateForm(@PathVariable("id") Long id, Model model) {
         by.grsu.crudApp.entity.User user = usersRepository.findOneById(id);
         model.addAttribute("user", user);
-        return "update-user";
+        return "userPage/update-user";
     }
 
     @PostMapping("/update/{id}")
@@ -95,7 +96,7 @@ public class UserController {
         model.addAttribute("userInfo", userInfo);
         logger.info("user page");
 
-        return "userPage";
+        return "userPage/userPage";
     }
 
     @GetMapping(value = "/admin")
@@ -111,7 +112,7 @@ public class UserController {
         model.addAttribute("users", users);
         logger.info("admin page");
 
-        return "adminPage";
+        return "userPage/adminPage";
     }
 
     @GetMapping(value = "/userInfo")
@@ -124,7 +125,7 @@ public class UserController {
         model.addAttribute("username", principal.getName());
         logger.info("user info page");
 
-        return "userInfoPage";
+        return "userPage/userInfoPage";
     }
 
     @GetMapping(value = "/403")
@@ -143,7 +144,7 @@ public class UserController {
             logger.warn("access denied");
         }
 
-        return "403Page";
+        return "userPage/403Page";
     }
 
 }

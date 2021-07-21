@@ -54,21 +54,20 @@ public class NoteController {
     @GetMapping("/addNewNote")
     public String showAddNewNoteForm() {
 
-        return "newNote";
+        return "notePage/newNote";
     }
 
     @PostMapping("/newNote")
     public String newNote(NoteForm noteForm, Principal principal, Model model) {
 
         try {
-//            System.out.println(noteForm.toString());
             noteService.createNote(noteForm, principal.getName());
 
             return "redirect:/note";
         } catch (Exception e) {
             logger.error("note name or note text is empty!!!");
             model.addAttribute("error", "note name or note text is empty!!!");
-            return "newNote";
+            return "notePage/newNote";
         }
 
     }
@@ -79,7 +78,7 @@ public class NoteController {
         Note note = noteRepository.findOneById(id);
         model.addAttribute("note", note);
         logger.info("view one note,get note by id note");
-        return "viewNote";
+        return "notePage/viewNote";
     }
 
     @GetMapping("/allNotes")
@@ -95,7 +94,7 @@ public class NoteController {
         model.addAttribute("notes",notes);
 
         logger.info("view all notes");
-        return "notePage";
+        return "notePage/notePage";
     }
 
     @GetMapping("/allNotes/date")
@@ -115,7 +114,7 @@ public class NoteController {
 
         logger.info("view notes,sort by date Of Creation");
 
-        return "notePage";
+        return "notePage/notePage";
     }
 
     @GetMapping("/allNotes/name")
@@ -134,7 +133,7 @@ public class NoteController {
 
         logger.info("view notes,sort by note name");
 
-        return "notePage";
+        return "notePage/notePage";
     }
 
     @GetMapping("/note")
@@ -157,7 +156,7 @@ public class NoteController {
         logger.info("view user notes");
         model.addAttribute("notes", notes);
 
-        return "notePage";
+        return "notePage/notePage";
     }
 
 
@@ -180,7 +179,7 @@ public class NoteController {
     public String showUpdateForm(@PathVariable("id") Long id, Model model) {
         Note note = noteRepository.findOneById(id);
         model.addAttribute("note", note);
-        return "update-note";
+        return "notePage/update-note";
     }
 
     @PostMapping("/updateNoteText/{id}")
@@ -203,7 +202,7 @@ public class NoteController {
         } else {
             model.addAttribute("error", "note text is empty");
             logger.error("note text is empty");
-            return "update-note";
+            return "notePage/update-note";
         }
 
     }

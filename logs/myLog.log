@@ -1,0 +1,9 @@
+2021-07-21 19:29:16.260  INFO 3208 --- [main] by.grsu.crudApp.Application              : Starting Application on DESKTOP-KT0VJS2 with PID 3208 (F:\un\app\simpleCrudApp\target\classes started by killua in F:\un\app\simpleCrudApp)
+2021-07-21 19:29:16.268  INFO 3208 --- [main] by.grsu.crudApp.Application              : No active profile set, falling back to default profiles: default
+2021-07-21 19:29:27.620  INFO 3208 --- [main] by.grsu.crudApp.Application              : Started Application in 12.045 seconds (JVM running for 15.482)
+2021-07-21 19:30:39.886  INFO 3208 --- [http-nio-8080-exec-4] b.g.crudApp.controllers.UserController   : This is welcome page
+2021-07-21 19:30:41.565  INFO 3208 --- [http-nio-8080-exec-5] b.g.crudApp.controllers.UserController   : admin page
+2021-07-21 19:30:42.721  INFO 3208 --- [http-nio-8080-exec-6] b.g.crudApp.controllers.NoteController   : view all notes
+2021-07-21 19:30:43.197  INFO 3208 --- [http-nio-8080-exec-7] b.g.crudApp.controllers.UserController   : admin page
+2021-07-21 19:30:44.405  INFO 3208 --- [http-nio-8080-exec-8] b.g.crudApp.controllers.NoteController   : view user notes
+2021-07-21 19:30:44.988  INFO 3208 --- [http-nio-8080-exec-9] b.g.crudApp.controllers.UserController   : admin page
