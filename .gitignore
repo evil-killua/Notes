@@ -9,4 +9,5 @@ out/
 *.ipr
 *.iws
 
+logs/
 *.log
