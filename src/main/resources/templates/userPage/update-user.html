@@ -10,6 +10,7 @@
 
 <form action="#" th:action="@{/update/{id}(id=${user.id})}" th:object="${user}" method="post">
 
+    <h2 th:if="${error != null}" th:utext="${error}" style="color: red;"></h2>
     <table>
         <tbody>
         <tr>

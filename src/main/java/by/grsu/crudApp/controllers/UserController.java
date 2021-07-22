@@ -2,14 +2,13 @@ package by.grsu.crudApp.controllers;
 
 import by.grsu.crudApp.dao.RoleDAO;
 import by.grsu.crudApp.entity.User;
-import by.grsu.crudApp.repositories.UserRoleRepository;
-import by.grsu.crudApp.repositories.UsersRepository;
+import by.grsu.crudApp.services.SignUpService;
+import by.grsu.crudApp.services.UserRoleService;
 import by.grsu.crudApp.utils.WebUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,39 +24,39 @@ import java.util.List;
 public class UserController {
 
     @Autowired
-    private UsersRepository usersRepository;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    @Autowired
-    private UserRoleRepository userRoleRepository;
+    private UserRoleService userRoleService;
 
     @Autowired
     private RoleDAO roleDAO;
+
+    @Autowired
+    private SignUpService userService;
 
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @GetMapping(value = {"/", "/welcome"})
     public String welcomePage(Model model) {
+
         model.addAttribute("title", "Welcome");
         model.addAttribute("message", "This is welcome page!");
         logger.info("This is welcome page");
+
         return "userPage/welcomePage";
     }
 
     @GetMapping("/delete/{id}")
     public String deleteUser(@PathVariable("id") long id) {
-        User user = usersRepository.findOneById(id);
+
+        User user = userService.getUserById(id);
 
         List<Long> listId = roleDAO.getId(id);
 
 
         for (int i = 0; i < listId.size(); i++) {
-            userRoleRepository.delete(listId.get(i));
+            userRoleService.deleteUserRoleById(listId.get(i));
         }
 
-        usersRepository.delete(user.getId());
+        userService.deleteUser(user.getId());
         logger.info("delete user");
 
         return "redirect:/admin";
@@ -65,25 +64,29 @@ public class UserController {
 
     @GetMapping("/edit/{id}")
     public String showUpdateForm(@PathVariable("id") Long id, Model model) {
-        by.grsu.crudApp.entity.User user = usersRepository.findOneById(id);
+
+        User user = userService.getUserById(id);
         model.addAttribute("user", user);
+
         return "userPage/update-user";
     }
 
     @PostMapping("/update/{id}")
-    public String updateUser(@PathVariable("id") Long id, by.grsu.crudApp.entity.User user) {
+    public String updateUser(@PathVariable("id") Long id, User user, Model model) {
 
-        User newUser = by.grsu.crudApp.entity.User.builder()
-                .userName(user.getUserName())
-                .enable(1)
-                .password(passwordEncoder.encode(user.getPassword()))
-                .id(user.getId())
-                .build();
+        if (!user.getUserName().isEmpty()) {
+            userService.updateUser(user);
 
-        usersRepository.save(newUser);
-        logger.info("update user");
+            logger.info("update user");
 
-        return "redirect:/admin";
+            return "redirect:/admin";
+        } else {
+            model.addAttribute("error", "note text is empty");
+            logger.error("note text is empty");
+
+            return "userPage/update-user";
+        }
+
     }
 
     @GetMapping("/user")
@@ -108,7 +111,7 @@ public class UserController {
 
         model.addAttribute("userInfo", userInfo);
 
-        List<by.grsu.crudApp.entity.User> users = usersRepository.findAll();
+        List<User> users = userService.getAllUsers();
         model.addAttribute("users", users);
         logger.info("admin page");
 
@@ -123,6 +126,7 @@ public class UserController {
         String userInfo = WebUtils.toString(loginedUser);
         model.addAttribute("userInfo", userInfo);
         model.addAttribute("username", principal.getName());
+
         logger.info("user info page");
 
         return "userPage/userInfoPage";

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class LoginController {
-    
+
     private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 
     @Autowired
@@ -27,13 +27,15 @@ public class LoginController {
 
     @PostMapping("/signUp")
     public String signUp(UserForm userForm, Model model) {
-        try {
 
+        try {
             service.signUp(userForm);
             logger.info("Successful registration");
+
             return "redirect:/login";
         } catch (Exception e) {
             model.addAttribute("error", "There is an account with this username:");
+
             return "userPage/signUp";
         }
     }
@@ -49,6 +51,7 @@ public class LoginController {
 
         model.addAttribute("title", "Logout");
         logger.info("successful logout");
+        
         return "userPage/logoutSuccessfulPage";
     }
 

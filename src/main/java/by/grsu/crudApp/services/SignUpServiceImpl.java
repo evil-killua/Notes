@@ -65,6 +65,49 @@ public class SignUpServiceImpl implements SignUpService {
         logger.info("successful authorization");
     }
 
+    @Override
+    public User getUserByUserName(String username) {
+
+        User user = usersRepository.findByUserName(username);
+
+        return user;
+    }
+
+    @Override
+    public User getUserById(long id) {
+
+        User user = usersRepository.findOneById(id);
+
+        return user;
+    }
+
+    @Override
+    public void deleteUser(long id) {
+
+        usersRepository.delete(id);
+    }
+
+    @Override
+    public void updateUser(User user) {
+        User newUser = User.builder()
+                .userName(user.getUserName())
+                .enable(1)
+                .password(passwordEncoder.encode(user.getPassword()))
+                .id(user.getId())
+                .build();
+
+        usersRepository.save(newUser);
+    }
+
+    @Override
+    public List<User> getAllUsers() {
+
+        List<User> users = usersRepository.findAll();
+
+        return users;
+
+    }
+
     private boolean usernameExist(String username) {
         return usersRepository.findOneByUserName(username) != null;
     }

@@ -7,3 +7,33 @@
 2021-07-21 19:30:43.197  INFO 3208 --- [http-nio-8080-exec-7] b.g.crudApp.controllers.UserController   : admin page
 2021-07-21 19:30:44.405  INFO 3208 --- [http-nio-8080-exec-8] b.g.crudApp.controllers.NoteController   : view user notes
 2021-07-21 19:30:44.988  INFO 3208 --- [http-nio-8080-exec-9] b.g.crudApp.controllers.UserController   : admin page
+2021-07-22 14:23:25.221  INFO 12048 --- [main] by.grsu.crudApp.Application              : Starting Application on DESKTOP-KT0VJS2 with PID 12048 (F:\un\app\simpleCrudApp\target\classes started by killua in F:\un\app\simpleCrudApp)
+2021-07-22 14:23:25.227  INFO 12048 --- [main] by.grsu.crudApp.Application              : No active profile set, falling back to default profiles: default
+2021-07-22 14:23:40.285  INFO 12048 --- [main] by.grsu.crudApp.Application              : Started Application in 15.674 seconds (JVM running for 19.375)
+2021-07-22 14:23:57.559  INFO 12048 --- [http-nio-8080-exec-4] b.g.crudApp.controllers.UserController   : This is welcome page
+2021-07-22 14:24:00.050  INFO 12048 --- [http-nio-8080-exec-2] b.g.crudApp.controllers.UserController   : admin page
+2021-07-22 14:24:01.396  INFO 12048 --- [http-nio-8080-exec-5] b.g.crudApp.controllers.NoteController   : view all notes
+2021-07-22 14:24:02.503  INFO 12048 --- [http-nio-8080-exec-6] b.g.crudApp.controllers.UserController   : admin page
+2021-07-22 14:24:03.616  INFO 12048 --- [http-nio-8080-exec-7] b.g.crudApp.controllers.NoteController   : view user notes
+2021-07-22 14:24:04.472  INFO 12048 --- [http-nio-8080-exec-8] b.g.crudApp.controllers.UserController   : admin page
+2021-07-22 14:24:07.857  INFO 12048 --- [http-nio-8080-exec-9] b.g.crudApp.controllers.NoteController   : view user notes
+2021-07-22 14:24:14.400  INFO 12048 --- [http-nio-8080-exec-1] b.g.crudApp.controllers.NoteController   : update note
+2021-07-22 14:24:14.431  INFO 12048 --- [http-nio-8080-exec-3] b.g.crudApp.controllers.NoteController   : view user notes
+2021-07-22 14:24:17.799  INFO 12048 --- [http-nio-8080-exec-4] b.g.crudApp.controllers.NoteController   : delete note by note id
+2021-07-22 14:24:17.826  INFO 12048 --- [http-nio-8080-exec-2] b.g.crudApp.controllers.NoteController   : view user notes
+2021-07-22 14:24:19.646  INFO 12048 --- [http-nio-8080-exec-5] b.g.crudApp.controllers.UserController   : admin page
+2021-07-22 14:24:26.194  INFO 12048 --- [http-nio-8080-exec-7] b.grsu.crudApp.services.NoteServiceImpl  : create new note
+2021-07-22 14:24:26.221  INFO 12048 --- [http-nio-8080-exec-8] b.g.crudApp.controllers.NoteController   : view user notes
+2021-07-22 14:24:43.470  INFO 12048 --- [http-nio-8080-exec-9] b.g.crudApp.controllers.NoteController   : view one note,get note by id note
+2021-07-22 14:24:44.683  INFO 12048 --- [http-nio-8080-exec-10] b.g.crudApp.controllers.NoteController   : view user notes
+2021-07-22 15:03:12.553  INFO 12964 --- [main] by.grsu.crudApp.Application              : Starting Application on DESKTOP-KT0VJS2 with PID 12964 (F:\un\app\simpleCrudApp\target\classes started by killua in F:\un\app\simpleCrudApp)
+2021-07-22 15:03:12.557  INFO 12964 --- [main] by.grsu.crudApp.Application              : No active profile set, falling back to default profiles: default
+2021-07-22 15:03:23.790  INFO 12964 --- [main] by.grsu.crudApp.Application              : Started Application in 11.813 seconds (JVM running for 14.133)
+2021-07-22 15:03:39.923  INFO 12964 --- [http-nio-8080-exec-4] b.g.crudApp.controllers.UserController   : This is welcome page
+2021-07-22 15:03:56.768  INFO 12964 --- [http-nio-8080-exec-5] b.g.crudApp.controllers.UserController   : admin page
+2021-07-22 15:04:27.094  INFO 12964 --- [http-nio-8080-exec-8] b.g.crudApp.services.SignUpServiceImpl   : successful authorization
+2021-07-22 15:04:27.095  INFO 12964 --- [http-nio-8080-exec-8] b.g.crudApp.controllers.LoginController  : Successful registration
+2021-07-22 15:04:31.896  INFO 12964 --- [http-nio-8080-exec-1] b.g.crudApp.controllers.UserController   : This is welcome page
+2021-07-22 15:04:33.327  INFO 12964 --- [http-nio-8080-exec-2] b.g.crudApp.controllers.UserController   : admin page
+2021-07-22 15:04:38.362  INFO 12964 --- [http-nio-8080-exec-4] b.g.crudApp.controllers.UserController   : delete user
+2021-07-22 15:04:38.378  INFO 12964 --- [http-nio-8080-exec-5] b.g.crudApp.controllers.UserController   : admin page

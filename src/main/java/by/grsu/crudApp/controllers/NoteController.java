@@ -6,11 +6,8 @@ import by.grsu.crudApp.dao.NoteDAO;
 import by.grsu.crudApp.dao.RoleDAO;
 import by.grsu.crudApp.entity.Note;
 import by.grsu.crudApp.entity.User;
-import by.grsu.crudApp.repositories.NoteRepository;
-import by.grsu.crudApp.repositories.UserNoteRepository;
-import by.grsu.crudApp.repositories.UserRoleRepository;
-import by.grsu.crudApp.repositories.UsersRepository;
 import by.grsu.crudApp.services.NoteService;
+import by.grsu.crudApp.services.SignUpService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 import java.nio.file.AccessDeniedException;
 import java.security.Principal;
 
-import java.time.*;
 import java.util.*;
 
 @Controller
@@ -32,16 +28,7 @@ public class NoteController {
     private NoteService noteService;
 
     @Autowired
-    private NoteRepository noteRepository;
-
-    @Autowired
-    private UserNoteRepository userNoteRepository;
-
-    @Autowired
-    private UsersRepository usersRepository;
-
-    @Autowired
-    private UserRoleRepository userRoleRepository;
+    private SignUpService userService;
 
     @Autowired
     private NoteDAO noteDAO;
@@ -67,6 +54,7 @@ public class NoteController {
         } catch (Exception e) {
             logger.error("note name or note text is empty!!!");
             model.addAttribute("error", "note name or note text is empty!!!");
+
             return "notePage/newNote";
         }
 
@@ -75,42 +63,43 @@ public class NoteController {
     @GetMapping("/note/{id}")
     public String viewNoteText(@PathVariable("id") long id, Model model) {
 
-        Note note = noteRepository.findOneById(id);
+        Note note = noteService.getOneNoteById(id);
         model.addAttribute("note", note);
         logger.info("view one note,get note by id note");
+
         return "notePage/viewNote";
     }
 
     @GetMapping("/allNotes")
     public String allNotes(Principal principal, Model model) throws AccessDeniedException {
 
-        List<Note> notes = noteRepository.findAll();
+        List<Note> notes = noteService.getAllNote();
 
-        User user = usersRepository.findByUserName(principal.getName());
+        User user = userService.getUserByUserName(principal.getName());
 
         String role = roleDAO.getRoleNames(user.getId()).get(0);
 
-        model.addAttribute("role",role);
-        model.addAttribute("notes",notes);
+        model.addAttribute("role", role);
+        model.addAttribute("notes", notes);
 
         logger.info("view all notes");
+
         return "notePage/notePage";
     }
 
     @GetMapping("/allNotes/date")
-    public String allNotesSortByDate(Principal principal, Model model) throws AccessDeniedException {
-        List<Note> notes = noteRepository.findAll();
+    public String allNotesSortByDate(Principal principal, Model model) {
 
-        List<Note> notes1 = new ArrayList<>(notes);
-        Collections.reverse(notes1);
-        notes1.sort(Comparator.comparing(Note::getDateOfCreation));
+        List<Note> notes = new ArrayList<>(noteService.getAllNote());
 
-        User user = usersRepository.findByUserName(principal.getName());
+        notes.sort(Comparator.comparing(Note::getDateOfCreation));
+
+        User user = userService.getUserByUserName(principal.getName());
 
         String role = roleDAO.getRoleNames(user.getId()).get(0);
 
-        model.addAttribute("role",role);
-        model.addAttribute("notes",notes);
+        model.addAttribute("role", role);
+        model.addAttribute("notes", notes);
 
         logger.info("view notes,sort by date Of Creation");
 
@@ -119,17 +108,16 @@ public class NoteController {
 
     @GetMapping("/allNotes/name")
     public String allNotesSortNoteName(Principal principal, Model model) throws AccessDeniedException {
-        List<Note> notes = noteRepository.findAll();
 
-        List<Note> notes1 = new ArrayList<>(notes);
-        notes1.sort(Comparator.comparing(Note::getNoteName));
+        List<Note> notes = new ArrayList<>(noteService.getAllNote());
+        notes.sort(Comparator.comparing(Note::getNoteName));
 
-        User user = usersRepository.findByUserName(principal.getName());
+        User user = userService.getUserByUserName(principal.getName());
 
         String role = roleDAO.getRoleNames(user.getId()).get(0);
 
-        model.addAttribute("role",role);
-        model.addAttribute("notes",notes);
+        model.addAttribute("role", role);
+        model.addAttribute("notes", notes);
 
         logger.info("view notes,sort by note name");
 
@@ -138,19 +126,20 @@ public class NoteController {
 
     @GetMapping("/note")
     public String userNote(Principal principal, Model model) {
-        User user = usersRepository.findOneByUserName(principal.getName());
+
+        User user = userService.getUserByUserName(principal.getName());
 
         List<Long> notesId = noteDAO.getId(user.getId());
 
         List<Note> notes = new ArrayList<>();
 
         for (Long id : notesId) {
-            notes.add(noteRepository.findOneById(id));
+            notes.add(noteService.getOneNoteById(id));
         }
 
         String role = roleDAO.getRoleNames(user.getId()).get(0);
 
-        model.addAttribute("role",role);
+        model.addAttribute("role", role);
 
 
         logger.info("view user notes");
@@ -162,46 +151,34 @@ public class NoteController {
 
     @GetMapping("/deleteNote/{id}")
     public String deleteUser(@PathVariable("id") long id) {
-        Note note = noteRepository.findOneById(id);
 
-        List<Long> listId = noteDAO.getIdNote(id);
+        noteService.deleteNote(id);
 
-        for (int i = 0; i < listId.size(); i++) {
-            userNoteRepository.delete(listId.get(i));
-        }
-
-        noteRepository.delete(note.getId());
         logger.info("delete note by note id");
         return "redirect:/note";
     }
 
     @GetMapping("/editNoteText/{id}")
     public String showUpdateForm(@PathVariable("id") Long id, Model model) {
-        Note note = noteRepository.findOneById(id);
+
+        Note note = noteService.getOneNoteById(id);
         model.addAttribute("note", note);
+
         return "notePage/update-note";
     }
 
     @PostMapping("/updateNoteText/{id}")
     public String updateUser(@PathVariable("id") Long id, Note note, Model model) {
 
-        Note note1 = noteRepository.findOneById(id);
-
-        Note newNote = Note.builder()
-                .noteName(note1.getNoteName())
-                .noteText(note.getNoteText())
-                .dateOfCreation(note1.getDateOfCreation())
-                .lastChange(LocalDateTime.now(ZoneId.systemDefault()).withNano(0))
-                .id(note.getId())
-                .build();
-
-        if (!newNote.getNoteText().isEmpty()) {
-            noteRepository.save(newNote);
+        if (!note.getNoteText().isEmpty()) {
+            noteService.updateNote(id, note);
             logger.info("update note");
+
             return "redirect:/note";
         } else {
             model.addAttribute("error", "note text is empty");
             logger.error("note text is empty");
+
             return "notePage/update-note";
         }
 
